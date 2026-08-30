@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AX-day 실습 키트 · 토양지하수처</title>
+<style>
+:root{--navy:#1A3A6B;--teal:#0E7C86;--bg:#EEF2F7;--ink:#1F2937;--mut:#5B6B7E;--line:#DFE6EF}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif}
+body{background:var(--bg);color:var(--ink)}
+header{background:var(--navy);color:#fff;padding:34px 24px;text-align:center}
+header .kicker{font-size:12px;letter-spacing:3px;color:#7FD1DB;font-weight:bold}
+header h1{font-size:26px;margin:10px 0 6px}
+header p{font-size:13px;color:#C9D6E6}
+main{max-width:860px;margin:26px auto 60px;padding:0 18px}
+section{background:#fff;border-radius:10px;padding:22px 24px;margin-bottom:18px;border:1px solid var(--line)}
+h2{font-size:16px;color:var(--navy);margin-bottom:14px}
+.dl{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid #eef2f7}
+.dl:last-child{border-bottom:none}
+.dl .n{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;flex-shrink:0}
+.dl .t{flex:1}.dl .t b{font-size:14px}.dl .t span{display:block;font-size:12px;color:var(--mut);margin-top:2px}
+.dl a{background:var(--navy);color:#fff;text-decoration:none;border-radius:6px;padding:9px 18px;font-size:13px;white-space:nowrap}
+.dl a.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.note{background:#E7F2F3;border-radius:8px;padding:12px 15px;font-size:12.5px;color:var(--ink);margin-top:14px;line-height:1.6}
+.note b{color:var(--teal)}
+.prompt{background:#152A4E;border-radius:8px;margin-bottom:12px;overflow:hidden}
+.prompt .head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#1A3A6B}
+.prompt .head b{color:#7FD1DB;font-size:12.5px}
+.prompt button{background:#0E7C86;color:#fff;border:none;border-radius:5px;padding:5px 12px;font-size:11.5px;cursor:pointer}
+.prompt pre{padding:13px 16px;color:#EAF2FA;font-size:12.5px;line-height:1.75;white-space:pre-wrap;font-family:inherit}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.links a{display:block;border:1px solid var(--line);border-radius:8px;padding:12px 14px;text-decoration:none;color:var(--ink);font-size:13px}
+.links a b{display:block;color:var(--navy);margin-bottom:3px;font-size:13.5px}
+.links a span{font-size:11.5px;color:var(--mut)}
+ul.check{list-style:none}
+ul.check li{padding:7px 0;font-size:13.5px;border-bottom:1px solid #eef2f7}
+ul.check li:last-child{border:none}
+ul.check li::before{content:"✓  ";color:var(--teal);font-weight:bold}
+footer{text-align:center;font-size:12px;color:var(--mut);padding:10px 0 40px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 22px;border-radius:24px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">TOYANG · JIHASU AX-DAY</div>
+  <h1>바이브코딩 2일 과정 · 실습 키트</h1>
+  <p>내 업무 하나를 이틀 안에 자동화하는 것. 여기서 시작합니다.</p>
+</header>
+<main>
+
+<section>
+  <h2>1. 키트 다운로드</h2>
+  <div class="dl"><div class="n">1</div>
+    <div class="t"><b>수질측정_샘플데이터.xlsx</b><span>공통 예제 실습용 더미 데이터 30건 (관정 3개 × 10개월)</span></div>
+    <a href="files/수질측정_샘플데이터.xlsx" download>다운로드</a></div>
+  <div class="dl"><div class="n">2</div>
+    <div class="t"><b>PRD 표준 템플릿</b><span>빈칸 채우기 양식 + 수질 예제 작성본 (7항목)</span></div>
+    <a href="files/PRD_표준템플릿_v2.md" download>다운로드</a></div>
+  <div class="dl"><div class="n">3</div>
+    <div class="t"><b>교안 PDF</b><span>오늘·내일 슬라이드 전체, 복습용</span></div>
+    <a href="files/AX-day_교안.pdf" download class="ghost">다운로드</a></div>
+  <div class="note"><b>받은 파일은</b> 바탕화면에 <b>AX-day</b> 폴더를 만들어 모아 주세요. 단계별 완성본은 배포하지 않습니다. 직접 만드는 것이 오늘의 목적입니다.</div>
+</section>
+
+<section>
+  <h2>2. 실습 프롬프트 모음 · 복사해서 쓰세요</h2>
+
+  <div class="prompt"><div class="head"><b>① PRD 생성 요청 — 기획실(채팅 프로젝트)에서</b><button onclick="cp(this)">복사</button></div>
+<pre>우리 부서는 관정별 수질 측정 엑셀을 분기마다 취합합니다. 측정값을 기준과 비교해 이상 여부를 확인하고 상태 요약을 붙여 보고합니다. 매번 수작업이라 시간이 오래 걸립니다.
+
+이 업무를 자동화하는 도구의 PRD를 7항목 표준 템플릿으로 작성해줘.</pre></div>
+
+  <div class="prompt"><div class="head"><b>② 화면 설계 — Claude Design에서</b><button onclick="cp(this)">복사</button></div>
+<pre>토양지하수처에서 쓸 '수질 측정 데이터 AI 분석 대시보드' 화면을 설계해줘.
+
+- 상단: 판정 카드 4개 (전체/정상/주의/오염 의심)
+- 중단: 관정별 TPH 시계열 차트 + 판정 분포 도넛
+- 하단: 측정 데이터 표 (판정 뱃지, AI 해석 컬럼)
+- 공공기관 남색 테마(#1A3A6B), 배경 #EEF2F7
+- 엑셀 업로드 영역 포함</pre></div>
+
+  <div class="prompt"><div class="head"><b>③ 이해 확인 — Claude Code(작업실)에서</b><button onclick="cp(this)">복사</button></div>
+<pre>폴더의 PRD.md와 design.html을 읽고, 무엇을 만들게 될지 3줄로 요약해줘.</pre></div>
+
+  <div class="prompt"><div class="head"><b>④ 기능 구현 — Claude Code에서</b><button onclick="cp(this)">복사</button></div>
+<pre>폴더의 design.html과 PRD.md를 읽고, 동작하는 앱을 index.html로 만들어줘.
+
+- SheetJS로 엑셀 업로드 → 표에 표시
+- PRD 3번 판정 규칙대로 정상/주의/이상치/오염 의심 뱃지를 자동 표시
+- Chart.js로 TPH 시계열(기준선 500) + 판정 도넛
+- Claude API로 관정별 상태를 60자 요약 (키는 입력창으로, 없으면 규칙 문구로 폴백)
+- 같은 폴더에 저장해줘</pre></div>
+
+  <div class="prompt"><div class="head"><b>⑤ Supabase 연동 — Claude Code에서</b><button onclick="cp(this)">복사</button></div>
+<pre>분석 결과를 Supabase에 저장하고, 앱을 열 때 저장된 데이터를 불러와 표시하는 기능을 추가해줘.
+
+- 테이블: water_quality (컬럼은 PRD 참고)
+- Project URL과 anon key는 입력창으로 받기
+- 'DB에 저장' / 'DB에서 불러오기' 버튼
+- 저장 성공 시 건수 안내 메시지</pre></div>
+
+  <div class="prompt"><div class="head"><b>⑥ 배포 플랜 B — GitHub이 막혔을 때</b><button onclick="cp(this)">복사</button></div>
+<pre>이 폴더를 Vercel로 배포해줘.</pre></div>
+</section>
+
+<section>
+  <h2>3. 가입·접속 링크</h2>
+  <div class="links">
+    <a href="https://claude.ai/download" target="_blank"><b>Claude Desktop</b><span>설치 + Google 로그인 (Pro)</span></a>
+    <a href="https://github.com" target="_blank"><b>GitHub</b><span>가장 먼저 가입 (인증 소요)</span></a>
+    <a href="https://vercel.com" target="_blank"><b>Vercel</b><span>Continue with GitHub</span></a>
+    <a href="https://supabase.com" target="_blank"><b>Supabase</b><span>Sign in with GitHub</span></a>
+  </div>
+</section>
+
+<section>
+  <h2>4. 시작 전 체크 · 하나라도 안 되면 손 들어 주세요</h2>
+  <ul class="check">
+    <li>Claude Desktop 로그인 완료, 채팅과 Code 탭이 열린다</li>
+    <li>새 프로젝트 '수질분석-본인이름' 생성, 지시문 입력창이 보인다</li>
+    <li>사이드바에서 Design이 실행된다</li>
+    <li>샘플 엑셀이 열리는 것을 확인했다</li>
+  </ul>
+</section>
+
+</main>
+<footer>토양지하수처 AX-day · (주)온토크래프트 — 이 페이지도 오늘 배우는 방법(GitHub + Vercel)으로 배포되었습니다</footer>
+<div class="toast" id="toast">프롬프트가 복사되었습니다</div>
+<script>
+function cp(btn){
+  const text = btn.closest('.prompt').querySelector('pre').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const t=document.getElementById('toast');
+    t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600);
+  });
+}
+</script>
+</body>
+</html>

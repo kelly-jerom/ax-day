@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>리포트 예시 갤러리 · 버튼 하나로 나오는 보고서들</title>
+<style>
+  :root{--navy:#1A3A6B;--dark:#17233A;--teal:#0E7C86;--bg:#EEF2F7;--line:#DFE5EC;
+        --red:#C0392B;--amber:#B7791F;--green:#1E8449}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:var(--bg);color:var(--dark);padding:40px 16px;line-height:1.65}
+  .wrap{max-width:900px;margin:0 auto}
+  h1{font-size:26px;margin-bottom:4px}
+  .lead{color:#6B7A90;font-size:14px;margin-bottom:36px}
+  h2{font-size:19px;color:var(--navy);border-left:4px solid var(--teal);padding-left:12px;margin:48px 0 6px}
+  .sub{color:#6B7A90;font-size:13.5px;margin-bottom:16px}
+  .prompt{background:var(--dark);color:#DCE6F5;border-radius:12px;padding:18px 22px;font-size:13px;margin:14px 0 8px;white-space:pre-wrap}
+  .prompt b{color:#7FD1D9;display:block;margin-bottom:8px;font-size:12px;letter-spacing:2px}
+  .diff{background:#fff;border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:10px;padding:16px 20px;font-size:13.5px;margin:16px 0 8px}
+  .diff b{color:var(--navy)}
+  /* 종이 문서 공통 */
+  .paper{background:#fff;border:1px solid var(--line);border-radius:6px;padding:44px 52px;box-shadow:0 2px 10px rgba(23,35,58,.06);font-family:'Noto Serif KR','Batang',serif}
+  .paper .doc-no{display:flex;justify-content:space-between;font-size:11.5px;color:#6B7A90;margin-bottom:22px}
+  .paper h3{text-align:center;font-size:20px;letter-spacing:6px;margin-bottom:6px}
+  .paper .doc-sub{text-align:center;font-size:12px;color:#6B7A90;margin-bottom:26px}
+  .paper h4{font-size:14px;margin:20px 0 8px;font-family:'Noto Sans KR',sans-serif}
+  .paper p,.paper li{font-size:13px}
+  .paper ul{list-style:none}
+  .paper li{margin-bottom:4px}
+  .paper table{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0;font-family:'Noto Sans KR',sans-serif}
+  .paper th{border:1px solid #B9C2CE;background:#F1F5FA;padding:7px 9px;font-weight:700}
+  .paper td{border:1px solid #B9C2CE;padding:7px 9px;text-align:center}
+  .paper td.l{text-align:left}
+  .paper .sign{text-align:right;font-size:12.5px;margin-top:26px}
+  .badge{display:inline-block;padding:1px 9px;border-radius:10px;font-size:11px;font-weight:700;color:#fff;font-family:'Noto Sans KR',sans-serif}
+  .b-red{background:var(--red)}.b-amber{background:var(--amber)}.b-green{background:var(--green)}.b-purple{background:#7D3C98}
+  /* 브리핑형 */
+  .brief{background:#fff;border:1px solid var(--line);border-radius:10px;padding:32px 40px}
+  .brief .bh{border-bottom:3px solid var(--navy);padding-bottom:10px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:baseline}
+  .brief .bh b{font-size:19px;color:var(--navy)}
+  .brief .bh span{font-size:12px;color:#6B7A90}
+  .bignums{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
+  .bignums .bn{border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center}
+  .bignums .bn .l{font-size:12px;color:#6B7A90}
+  .bignums .bn .v{font-size:30px;font-weight:800}
+  .concl{background:#F1F5FA;border-radius:10px;padding:14px 18px;font-size:13.5px}
+  .concl b{color:var(--navy)}
+  @media(max-width:700px){.paper{padding:28px 20px}.bignums{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>리포트 예시 갤러리</h1>
+  <div class="lead">버튼 하나로 나오는 보고서들 · 어떤 형식을 요청할지, 실물로 고르세요</div>
+
+  <!-- ============ 1. 결과 보고서형 ============ -->
+  <h2>1. 결과 보고서형 · 공문 스타일</h2>
+  <div class="sub">검증·판정 업무의 기본 출력 · 그대로 인쇄해 결재 올릴 수 있는 형식</div>
+
+  <div class="paper">
+    <div class="doc-no"><span>토양지하수처 지하수관리부</span><span>2026. 9. 3.</span></div>
+    <h3>수질 측정 결과 보고</h3>
+    <div class="doc-sub">2026년 2분기 · 관정 3개소 · 측정 30건</div>
+    <h4>1. 개요</h4>
+    <ul>
+      <li>가. 대상: W01, W02, W03 관정 분기 수질 측정 자료</li>
+      <li>나. 기준: 먹는물 수질기준(TPH 500 µg/L) 및 분석지침</li>
+    </ul>
+    <h4>2. 판정 결과</h4>
+    <table>
+      <tr><th>정상</th><th>주의</th><th>이상치</th><th>오염 의심</th><th>계</th></tr>
+      <tr><td>25</td><td>2</td><td>1</td><td>2</td><td><b>30</b></td></tr>
+    </table>
+    <p style="font-size:12px;color:#6B7A90">※ 기준 초과 및 이상 내역</p>
+    <table>
+      <tr><th>관정</th><th>측정일</th><th>항목</th><th>측정값</th><th>판정</th></tr>
+      <tr><td>W02</td><td>2026-06-10</td><td>TPH</td><td>1,200 µg/L</td><td><span class="badge b-red">오염 의심</span></td></tr>
+      <tr><td>W02</td><td>2026-05-10</td><td>TPH</td><td>850 µg/L</td><td><span class="badge b-red">오염 의심</span></td></tr>
+      <tr><td>W01</td><td>2026-02-10</td><td>DO</td><td>25.0 mg/L</td><td><span class="badge b-purple">이상치</span></td></tr>
+    </table>
+    <h4>3. 종합 의견</h4>
+    <ul>
+      <li>가. W02 관정은 4월 이후 TPH 지속 상승, 기준 초과 2회로 정밀조사 착수가 필요함</li>
+      <li>나. W01 관정 DO 이상치 1건은 센서 점검 대상으로 판단됨</li>
+      <li>다. 그 외 관정은 기준 이내로 안정적임</li>
+    </ul>
+    <div class="sign">작성: 지하수관리부 담당자 (인)</div>
+  </div>
+  <div class="prompt"><b>이 보고서를 낳는 요청</b>'결과 보고서' 버튼을 만들어줘. 누르면 판정 결과를 공문 형식으로 정리해줘.
+
+- 제목·부서·날짜, 1. 개요(대상·기준) 2. 판정 결과(집계 표 + 초과 상세 표) 3. 종합 의견
+- 종합 의견은 행정 문서 어조의 개조식으로 (가., 나., 다.)
+- A4 인쇄에 맞게, 복사 버튼과 인쇄 버튼 포함</div>
+
+  <!-- ============ 2. 1장 브리핑형 ============ -->
+  <h2>2. 1장 브리핑형 · 바쁜 상급자용</h2>
+  <div class="sub">큰 숫자 셋과 결론 세 줄 · 30초 안에 상황이 전달되는 형식</div>
+
+  <div class="brief">
+    <div class="bh"><b>수질 측정 브리핑</b><span>지하수관리부 · 2026년 2분기</span></div>
+    <div class="bignums">
+      <div class="bn"><div class="l">총 측정</div><div class="v">30건</div></div>
+      <div class="bn"><div class="l">기준 초과</div><div class="v" style="color:var(--red)">2건</div></div>
+      <div class="bn"><div class="l">정상 비율</div><div class="v" style="color:var(--green)">83%</div></div>
+    </div>
+    <div class="concl"><b>결론</b><br>
+    ① W02 관정 TPH 상승 추세 지속, 기준 초과 2회 → 정밀조사 착수 필요<br>
+    ② 나머지 관정은 기준 이내 안정 유지<br>
+    ③ 차기 분기부터 W02 측정 주기를 월 1회로 단축 권고</div>
+  </div>
+  <div class="prompt"><b>이 브리핑을 낳는 요청</b>'브리핑' 버튼을 만들어줘. 한 장 요약 형식으로:
+
+- 상단: 제목과 기간, 큰 숫자 3개 (총 측정 / 기준 초과 / 정상 비율)
+- 하단: 결론 3줄 (①②③, 조치 방향까지)
+- 30초 안에 읽히는 분량으로, 복사 버튼 포함</div>
+
+  <!-- ============ 3. 월간 리포트형 ============ -->
+  <h2>3. 월간·분기 리포트형 · 전기 대비가 핵심</h2>
+  <div class="sub">정기 보고의 기본 · 이번 값보다 "지난번과 비교해 어떤가"가 정보입니다</div>
+
+  <div class="paper">
+    <div class="doc-no"><span>토양정화부</span><span>2026. 9. 1.</span></div>
+    <h3>8월 정화현장 운영 리포트</h3>
+    <div class="doc-sub">현장 6개소 · 집계 기간 2026. 8. 1. ~ 8. 31.</div>
+    <h4>1. 월간 집계 (전월 대비)</h4>
+    <table>
+      <tr><th>항목</th><th>7월</th><th>8월</th><th>증감</th></tr>
+      <tr><td class="l">처리 토량 (㎥)</td><td>12,400</td><td>14,100</td><td style="color:var(--green)">+13.7%</td></tr>
+      <tr><td class="l">검증 시료 (건)</td><td>86</td><td>92</td><td style="color:var(--green)">+7.0%</td></tr>
+      <tr><td class="l">기준 초과 (건)</td><td>4</td><td>2</td><td style="color:var(--green)">-2건</td></tr>
+      <tr><td class="l">민원 (건)</td><td>1</td><td>3</td><td style="color:var(--red)">+2건</td></tr>
+    </table>
+    <h4>2. 특이사항</h4>
+    <ul>
+      <li>가. ○○현장 악취 민원 3건 발생, 방진막 보강 및 살수 주기 단축 조치 완료</li>
+      <li>나. △△현장 처리 완료, 검증 결과 전 항목 기준 이내로 종료 절차 착수</li>
+    </ul>
+    <h4>3. 익월 계획</h4>
+    <ul><li>가. ○○현장 민원 추이 주간 모니터링, 나. 신규 1개소 착수 예정</li></ul>
+    <div class="sign">작성: 토양정화부 (인)</div>
+  </div>
+  <div class="prompt"><b>이 리포트를 낳는 요청</b>'월간 리포트' 버튼을 만들어줘.
+
+- 1. 월간 집계 표: 항목별로 전월 값과 나란히, 증감을 색으로 (개선 초록, 악화 빨강)
+- 2. 특이사항 개조식 3개 이내, 3. 익월 계획 한 줄
+- 데이터는 DB에서 해당 월과 전월을 불러와 자동 집계</div>
+
+  <!-- ============ 4. 상황 보고형 ============ -->
+  <h2>4. 상황 보고형 · 이상 발생 시</h2>
+  <div class="sub">기준 초과·사고 때 즉시 나가는 보고 · 개요, 현황, 조치, 계획의 4단 구성</div>
+
+  <div class="paper">
+    <div class="doc-no"><span>지하수관리부 · 긴급</span><span>2026. 6. 11. 09:30</span></div>
+    <h3>W02 관정 수질 기준 초과 보고</h3>
+    <div class="doc-sub">먹는물 수질기준 TPH 500 µg/L 초과</div>
+    <h4>1. 발생 개요</h4>
+    <p>· 6. 10. 정기 측정에서 W02 관정 TPH 1,200 µg/L 검출 (기준의 2.4배, 전월 850)</p>
+    <h4>2. 현황</h4>
+    <table>
+      <tr><th>측정일</th><th>4월</th><th>5월</th><th>6월</th></tr>
+      <tr><td>TPH (µg/L)</td><td>320</td><td style="color:var(--amber)">850</td><td style="color:var(--red)"><b>1,200</b></td></tr>
+    </table>
+    <p>· 3개월 연속 상승 추세, 인접 W01·W03 관정은 기준 이내</p>
+    <h4>3. 조치 사항</h4>
+    <p>· 재측정 시료 채취 완료(6. 11.), 주변 오염원 현장 확인 착수</p>
+    <h4>4. 향후 계획</h4>
+    <p>· 재측정 결과 확인 후 정밀조사 여부 결정, 결과는 익일 보고 예정</p>
+    <div class="sign">보고: 지하수관리부 담당자 (인)</div>
+  </div>
+  <div class="prompt"><b>이 보고를 낳는 요청</b>기준 초과 행이 있으면 '상황 보고' 버튼이 활성화되게 해줘. 누르면:
+
+- 제목(관정·항목·초과 배수), 1. 발생 개요 2. 현황(최근 3회 추이 표) 3. 조치 4. 향후 계획
+- 초과 값은 빨강으로 강조, 행정 문서 어조로
+- 조치와 계획 칸은 담당자가 화면에서 직접 수정할 수 있게</div>
+
+  <!-- ============ 5. 전문가 해석 리포트형 ============ -->
+  <h2>5. 전문가 해석 리포트형 · AI가 소견을 쓰는 수준</h2>
+  <div class="sub">요약을 넘어 해석으로 · 항목 간 상관을 읽고, 근거를 인용하고, 모르는 것은 모른다고 쓰는 리포트</div>
+
+  <div class="paper">
+    <div class="doc-no"><span>지하수관리부 · AI 분석 초안</span><span>2026. 9. 3.</span></div>
+    <h3>W02 관정 수질 전문 소견서</h3>
+    <div class="doc-sub">분석 기간 2026. 1. ~ 6. · 측정 10회 · 본 소견은 AI 생성 초안으로 전문가 검토 전 자료임</div>
+
+    <h4>1. 항목 간 상관 해석</h4>
+    <p>· TPH는 4월 320 → 5월 850 → 6월 1,200 µg/L로 3개월 연속 상승하였음 (기준 500의 2.4배)</p>
+    <p>· 같은 기간 DO는 5.0 → 1.2 mg/L로 하강, ORP는 +65 → -15 mV로 음전환되었음</p>
+    <p>· 세 항목의 동반 변화는 유기 오염물 유입 후 혐기 환경으로 전환되는 전형적 양상과 부합함
+       (근거: 5월·6월 측정값, 분석지침의 혐기 지표 기준)</p>
+
+    <h4>2. 관정별 위험도 평가</h4>
+    <table>
+      <tr><th>관정</th><th>위험도</th><th>판단 근거</th></tr>
+      <tr><td>W02</td><td><span class="badge b-red">높음</span></td><td class="l">TPH 기준 초과 2회 + DO·ORP 동반 악화, 상승 추세 지속</td></tr>
+      <tr><td>W01</td><td><span class="badge b-amber">관찰</span></td><td class="l">기준 이내이나 W02 인접, DO 이상치 1건은 센서 요인 가능성</td></tr>
+      <tr><td>W03</td><td><span class="badge b-green">낮음</span></td><td class="l">전 항목 기준 이내, 뚜렷한 추세 없음</td></tr>
+    </table>
+
+    <h4>3. 추정의 한계</h4>
+    <p>· 오염원 위치와 유입 경로는 본 데이터만으로 특정할 수 없음 (현장 조사 필요)</p>
+    <p>· 혐기화 해석은 측정 2회에 기반한 추정으로, 재측정으로 확인되기 전까지는 가설임</p>
+
+    <h4>4. 권고 (우선순위)</h4>
+    <ul>
+      <li>가. (즉시) W02 재측정 및 시료 정밀 분석</li>
+      <li>나. (1주 내) W02 주변 오염원 현장 조사, W01 센서 점검</li>
+      <li>다. (분기) W02 측정 주기를 월 1회로 단축, 추세 재평가</li>
+    </ul>
+    <div class="sign">AI 분석 초안 · 검토: 지하수관리부 (인)</div>
+  </div>
+  <div class="prompt"><b>이 소견서를 낳는 요청</b>'전문 소견서' 버튼을 만들어줘. 수질 분석 전문가의 관점으로 다음 형식의 소견 초안을 작성해줘.
+
+- 1. 항목 간 상관 해석: TPH·DO·ORP·EC를 함께 읽고, 변화가 의미하는 바를 해석
+- 2. 관정별 위험도 표: 높음/관찰/낮음 + 판단 근거 한 줄
+- 3. 추정의 한계: 이 데이터로 알 수 없는 것을 명시
+- 4. 권고: 즉시 / 1주 내 / 분기, 우선순위로
+
+규칙: 모든 소견에 근거 수치를 붙일 것. 확실하지 않은 것은 추정임을 표시할 것.
+판정 기준은 첨부한 매뉴얼을 따를 것. 제목 아래 "AI 생성 초안, 전문가 검토 전 자료" 명시.</div>
+
+  <div class="diff"><b>전문가 리포트를 만드는 요청의 4재료</b> · ① 역할과 관점 지정 ("수질 분석 전문가의 관점으로, 항목을 함께 읽어") ② 근거 인용 강제 ("모든 소견에 근거 수치를 붙여") ③ 한계 명시 강제 ("모르는 것은 모른다고, 추정은 추정이라고") ④ 기준 문서 첨부 (매뉴얼·지침이 소견의 뼈대). 이 넷이 빠지면 전문가 소견이 아니라 그럴듯한 작문이 나옵니다.</div>
+
+  <div class="diff" style="margin-top:40px"><b>리포트 요청의 공통 원칙</b> · ① 형식을 번호로 짜서 요청 (1. 개요 2. 결과 3. 의견) ② 어조 지정: "행정 문서 어조, 개조식(가·나·다)" ③ 숫자는 비교와 함께 (전월 대비, 기준의 몇 배) ④ 복사·인쇄 버튼을 항상 함께 ⑤ AI가 쓰는 것은 초안, 결재 전 검토는 사람의 몫입니다.</div>
+</div>
+</body>
+</html>

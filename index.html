@@ -110,7 +110,16 @@ footer{text-align:center;font-size:12px;color:var(--mut);padding:10px 0 40px}
 . Supabase는 다음 단계에서 하니 지금은 넣지 마
 . 같은 폴더에 저장해줘</pre></div>
 
-  <div class="prompt"><div class="head"><b>⑦ STEP 4 · Supabase 저장</b><button onclick="cp(this)">복사</button></div>
+  <div class="prompt"><div class="head"><b>⑦-쉬운 길 A · 로컬 저장 (혼자 쓰는 도구의 기본)</b><button onclick="cp(this)">복사</button></div>
+<pre>판정 결과와 업로드한 데이터를 localStorage에 저장해서, 브라우저를 껐다 켜도 유지되게 해줘.
+'데이터 초기화' 버튼과, 전체를 CSV로 내려받는 '백업' 버튼도 만들어줘.</pre></div>
+
+  <div class="prompt"><div class="head"><b>⑦-쉬운 길 B · 로컬 DB (SQLite · 데이터가 자산인 도구)</b><button onclick="cp(this)">복사</button></div>
+<pre>브라우저에서 동작하는 SQLite(sql.js)로 저장 기능을 만들어줘.
+데이터 테이블을 만들고, .sqlite 파일로 내려받는 백업 버튼과
+파일 불러오기 버튼도 추가해줘. CDN이 안 되는 환경이면 localStorage로 폴백해줘.</pre></div>
+
+  <div class="prompt"><div class="head"><b>⑦ STEP 4 · Supabase 저장 (여럿이 같이 쓸 때)</b><button onclick="cp(this)">복사</button></div>
 <pre>step3.html과 PRD.md를 읽고, 분석 결과를 Supabase에 저장하고 불러오는 step4.html을 만들어줘.
 
 - 테이블: water_quality (컬럼은 PRD 참고)

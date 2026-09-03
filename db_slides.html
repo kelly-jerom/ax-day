@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데이터베이스 기초 · 6장</title>
+<style>
+  :root{--navy:#1A3A6B;--dark:#17233A;--teal:#0E7C86;--bg:#EEF2F7;--line:#DFE5EC;
+        --red:#C0392B;--amber:#B7791F;--green:#1E8449}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:var(--bg);color:var(--dark);overflow:hidden}
+  .slide{display:none;width:100vw;height:100vh;padding:5vh 6vw;flex-direction:column}
+  .slide.on{display:flex}
+  .kicker{color:var(--teal);font-weight:800;letter-spacing:4px;font-size:clamp(11px,1.3vw,14px)}
+  h1{font-size:clamp(22px,3.2vw,40px);margin:6px 0 18px;letter-spacing:-0.5px}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;gap:14px}
+  .term{display:inline-block;background:var(--navy);color:#fff;font-size:clamp(11px,1.2vw,14px);font-weight:700;padding:3px 14px;border-radius:14px;margin:0 4px 6px 0}
+  .term.t2{background:var(--teal)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 26px}
+  p,li{font-size:clamp(13px,1.5vw,18px);line-height:1.7}
+  table{width:100%;border-collapse:collapse;font-size:clamp(12px,1.3vw,16px)}
+  th{background:#F1F5FA;color:var(--navy);text-align:left;padding:8px 12px;border-bottom:2px solid var(--line)}
+  td{padding:8px 12px;border-bottom:1px solid #EEF2F7}
+  tr:nth-child(even) td{background:#FAFCFE}
+  .hl{background:#E8F4F5 !important}
+  .badge{display:inline-block;padding:2px 11px;border-radius:11px;font-size:.8em;font-weight:700;color:#fff}
+  .b-red{background:var(--red)}.b-green{background:var(--green)}
+  .diff{background:#fff;border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:12px;padding:14px 20px;font-size:clamp(13px,1.5vw,18px)}
+  .diff b{color:var(--navy)}
+  .prompt{background:var(--dark);color:#DCE6F5;border-radius:12px;padding:14px 20px;font-size:clamp(12px,1.3vw,16px);white-space:pre-wrap;line-height:1.65}
+  .prompt b{color:#7FD1D9;display:block;margin-bottom:5px;font-size:.85em;letter-spacing:2px}
+  svg{width:100%;height:auto;max-height:52vh}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center}
+  .nav{position:fixed;bottom:22px;right:28px;display:flex;gap:10px;align-items:center;z-index:9}
+  .nav button{width:42px;height:42px;border-radius:50%;border:none;background:var(--navy);color:#fff;font-size:18px;cursor:pointer}
+  .pg{position:fixed;bottom:30px;left:32px;font-size:14px;color:#8A94A6;font-weight:700}
+  .hint{position:fixed;top:18px;right:28px;font-size:12px;color:#A8B3C2}
+</style>
+</head>
+<body>
+
+<section class="slide on">
+  <div class="kicker">DB BASICS · 1/7</div>
+  <h1>데이터베이스란 · 규칙 있는 서류함</h1>
+  <div class="body">
+    <div><span class="term">database (DB)</span><span class="term t2">query 쿼리</span></div>
+    <div class="card"><p><b>엑셀은 자유로운 종이, DB는 규칙 있는 서류함입니다.</b> 어떤 표(테이블)에 어떤 항목(컬럼)을 어떤 형식으로 적는지 미리 정하고, 규칙을 어기는 데이터는 받지 않습니다. 그리고 서류함에는 사서가 있어서, 묻는 말(쿼리)에 답합니다. 엑셀은 내가 눈으로 찾고, DB는 물으면 답합니다.</p></div>
+    <div class="card"><svg viewBox="0 0 780 170" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1A3A6B"/></marker>
+  <marker id="art" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#0E7C86"/></marker>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker>
+  <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1E8449"/></marker>
+</defs>
+    <rect x="20" y="45" width="200" height="80" rx="12" fill="#fff" stroke="#1A3A6B" stroke-width="2"/>
+    <text x="120" y="80" text-anchor="middle" font-size="16" font-weight="700" fill="#17233A">내 앱 (화면)</text>
+    <text x="120" y="103" text-anchor="middle" font-size="12" fill="#6B7A90">업무도구.html</text>
+    <rect x="560" y="45" width="200" height="80" rx="12" fill="#1A3A6B"/>
+    <text x="660" y="80" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">데이터베이스</text>
+    <text x="660" y="103" text-anchor="middle" font-size="12" fill="#B9CBE4">규칙 있는 서류함</text>
+    <line x1="230" y1="65" x2="550" y2="65" stroke="#1A3A6B" stroke-width="2.5" marker-end="url(#ar)"/>
+    <text x="390" y="52" text-anchor="middle" font-size="13" font-weight="700" fill="#1A3A6B">질문(쿼리) · "6월에 기준 넘은 것만 줘"</text>
+    <line x1="550" y1="110" x2="230" y2="110" stroke="#0E7C86" stroke-width="2.5" marker-end="url(#art)"/>
+    <text x="390" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#0E7C86">답(결과) · 2건</text>
+  </svg></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">DB BASICS · 2/7</div>
+  <h1>테이블 · 행 · 컬럼 · 설계의 첫 질문</h1>
+  <div class="body">
+    <div><span class="term">table 테이블</span><span class="term">row 행</span><span class="term">column 컬럼</span><span class="term t2">schema 스키마</span><span class="term t2">primary key 기본키</span></div>
+    <div class="card">
+      <table>
+        <tr><th>id</th><th>well_id</th><th>measure_date</th><th>tph_ugl</th><th>judgment</th></tr>
+        <tr><td>1</td><td>W01</td><td>2026-02-10</td><td>0</td><td><span class="badge b-green">정상</span></td></tr>
+        <tr class="hl"><td>2</td><td>W02</td><td>2026-06-10</td><td>1,200</td><td><span class="badge b-red">오염 의심</span></td></tr>
+        <tr><td>3</td><td>W03</td><td>2026-04-10</td><td>0</td><td><span class="badge b-green">정상</span></td></tr>
+      </table>
+      <p style="margin-top:10px">세로가 <b>컬럼</b>(항목), 가로 한 줄이 <b>행</b>(데이터 한 건), 이 표가 <b>테이블</b>, 구조 정의 전체가 <b>스키마</b>, id는 행의 주민등록번호인 <b>기본키</b>입니다.</p>
+    </div>
+    <div class="diff"><b>설계의 첫 질문:</b> "한 행에 무엇을 담을 것인가?" 측정 한 건씩인가, 관정 하나씩인가. 이 단위 결정이 설계의 90%이고, 사람이 정하는 부분입니다.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">DB BASICS · 3/7</div>
+  <h1>로컬과 서버 · 어디에 두느냐가 누가 보느냐를 정한다</h1>
+  <div class="body">
+    <div><span class="term t2">localStorage 메모지</span><span class="term">SQLite 로컬 DB</span><span class="term t2">Supabase 서버 DB</span></div>
+    <div class="card"><svg viewBox="0 0 920 330" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1A3A6B"/></marker>
+  <marker id="art" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#0E7C86"/></marker>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker>
+  <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1E8449"/></marker>
+</defs>
+    <rect x="15" y="15" width="530" height="255" rx="16" fill="#F6F9FC" stroke="#DFE5EC"/>
+    <text x="35" y="45" font-size="15" font-weight="800" fill="#17233A">내 컴퓨터 · 로컬</text>
+    <rect x="40" y="70" width="170" height="90" rx="12" fill="#fff" stroke="#1A3A6B" stroke-width="2"/>
+    <text x="125" y="108" text-anchor="middle" font-size="15" font-weight="700" fill="#17233A">내 앱</text>
+    <text x="125" y="130" text-anchor="middle" font-size="11.5" fill="#6B7A90">업무도구.html</text>
+    <rect x="330" y="55" width="185" height="52" rx="10" fill="#fff" stroke="#6B7A90" stroke-width="1.5"/>
+    <text x="422" y="77" text-anchor="middle" font-size="13" font-weight="700" fill="#6B7A90">localStorage</text>
+    <text x="422" y="95" text-anchor="middle" font-size="11" fill="#8A94A6">메모지 · 화면 상태 기억</text>
+    <rect x="330" y="125" width="185" height="52" rx="10" fill="#1A3A6B"/>
+    <text x="422" y="147" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">SQLite (로컬 DB)</text>
+    <text x="422" y="165" text-anchor="middle" font-size="11" fill="#B9CBE4">내 서류함 · 조인·인덱스 동작</text>
+    <line x1="215" y1="90" x2="322" y2="80" stroke="#6B7A90" stroke-width="2" marker-end="url(#ar)" marker-start="url(#ar)"/>
+    <line x1="215" y1="130" x2="322" y2="148" stroke="#1A3A6B" stroke-width="2.2" marker-end="url(#ar)" marker-start="url(#ar)"/>
+    <rect x="330" y="205" width="185" height="42" rx="9" fill="#E8F4F5" stroke="#0E7C86"/>
+    <text x="422" y="224" text-anchor="middle" font-size="12" font-weight="700" fill="#0E7C86">.sqlite 파일</text>
+    <text x="422" y="239" text-anchor="middle" font-size="10.5" fill="#0E7C86">백업 · 이동 (파일이 진본)</text>
+    <line x1="422" y1="180" x2="422" y2="200" stroke="#0E7C86" stroke-width="2" marker-end="url(#art)" marker-start="url(#art)"/>
+    <rect x="680" y="55" width="220" height="150" rx="16" fill="#0E7C86"/>
+    <text x="790" y="95" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Supabase</text>
+    <text x="790" y="118" text-anchor="middle" font-size="12" fill="#D4EEF0">서버 DB · 부서 공용 서류함</text>
+    <text x="790" y="140" text-anchor="middle" font-size="11" fill="#D4EEF0">여러 사람이 같은 데이터를</text>
+    <text x="790" y="156" text-anchor="middle" font-size="11" fill="#D4EEF0">보고 · 씁니다</text>
+    <line x1="552" y1="130" x2="672" y2="130" stroke="#0E7C86" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#art)" marker-start="url(#art)"/>
+    <text x="612" y="115" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0E7C86">인터넷</text>
+    <text x="612" y="152" text-anchor="middle" font-size="10.5" fill="#6B7A90">URL + 키</text>
+    <text x="280" y="300" text-anchor="middle" font-size="13" font-weight="700" fill="#17233A">혼자 쓸 때는 이 안에서 끝납니다</text>
+    <text x="790" y="300" text-anchor="middle" font-size="13" font-weight="700" fill="#0E7C86">같이 써야 하는 순간, 이쪽으로</text>
+  </svg></div>
+    <div class="diff"><b>고르는 질문 두 개.</b> ① 진본이 어디인가? 엑셀이 진본이면 저장 없이도 됩니다. ② 혼자인가 같이인가? 혼자면 SQLite, 같이면 Supabase. 둘은 같은 SQL 세계라 나중에 옮겨탈 수 있습니다.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">DB BASICS · 4/7</div>
+  <h1>조인 · 두 표를 연결 키로 잇는다</h1>
+  <div class="body">
+    <div><span class="term">join 조인</span><span class="term t2">join key 연결 키</span></div>
+    <div class="card"><svg viewBox="0 0 920 300" style="width:100%;height:auto;margin-bottom:8px" xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1A3A6B"/></marker>
+  <marker id="art" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#0E7C86"/></marker>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker>
+  <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1E8449"/></marker>
+</defs>
+    <rect x="40" y="20" width="330" height="86" rx="12" fill="#fff" stroke="#1A3A6B" stroke-width="2"/>
+    <text x="205" y="45" text-anchor="middle" font-size="13.5" font-weight="700" fill="#17233A">관정 정보 테이블 (wells)</text>
+    <text x="205" y="68" text-anchor="middle" font-size="12" fill="#6B7A90">이름 · 주소 · 관정마다 한 번만</text>
+    <rect x="140" y="78" width="130" height="22" rx="11" fill="#E8F4F5" stroke="#0E7C86"/>
+    <text x="205" y="93" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0E7C86">well_id</text>
+    <rect x="550" y="20" width="330" height="86" rx="12" fill="#fff" stroke="#1A3A6B" stroke-width="2"/>
+    <text x="715" y="45" text-anchor="middle" font-size="13.5" font-weight="700" fill="#17233A">측정 테이블 (water_quality)</text>
+    <text x="715" y="68" text-anchor="middle" font-size="12" fill="#6B7A90">측정일 · TPH · 측정마다 한 행</text>
+    <rect x="650" y="78" width="130" height="22" rx="11" fill="#E8F4F5" stroke="#0E7C86"/>
+    <text x="715" y="93" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0E7C86">well_id</text>
+    <line x1="205" y1="110" x2="440" y2="165" stroke="#0E7C86" stroke-width="2.5" marker-end="url(#art)"/>
+    <line x1="715" y1="110" x2="480" y2="165" stroke="#0E7C86" stroke-width="2.5" marker-end="url(#art)"/>
+    <rect x="330" y="165" width="260" height="40" rx="20" fill="#0E7C86"/>
+    <text x="460" y="190" text-anchor="middle" font-size="13.5" font-weight="800" fill="#fff">well_id로 연결 = 조인 (JOIN)</text>
+    <line x1="460" y1="210" x2="460" y2="235" stroke="#1A3A6B" stroke-width="2.5" marker-end="url(#ar)"/>
+    <rect x="235" y="240" width="450" height="46" rx="12" fill="#1A3A6B"/>
+    <text x="460" y="262" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">한 표처럼 보인다 · 이름 + 주소 + 측정일 + TPH</text>
+    <text x="460" y="279" text-anchor="middle" font-size="10.5" fill="#B9CBE4">데이터는 나눠 두고, 보여줄 때만 잇는다</text>
+  </svg></div>
+    <div class="prompt"><b>요청 문장</b>측정값과 관정 정보가 한 표에 섞여 있어. 관정 정보 테이블을 분리하고 well_id를 연결 키로 정해줘. 화면에서는 두 테이블을 조인해서 관정 이름과 측정값이 같이 보이게 해줘.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">DB BASICS · 5/7</div>
+  <h1>인덱스 · 책 뒤의 찾아보기</h1>
+  <div class="body">
+    <div><span class="term">index 인덱스</span></div>
+    <div class="card"><svg viewBox="0 0 920 240" style="width:100%;height:auto;margin-bottom:8px" xmlns="http://www.w3.org/2000/svg"><defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1A3A6B"/></marker>
+  <marker id="art" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#0E7C86"/></marker>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker>
+  <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1E8449"/></marker>
+</defs>
+    <rect x="20" y="90" width="150" height="60" rx="12" fill="#fff" stroke="#1A3A6B" stroke-width="2"/>
+    <text x="95" y="115" text-anchor="middle" font-size="13" font-weight="700" fill="#17233A">질문(쿼리)</text>
+    <text x="95" y="135" text-anchor="middle" font-size="11" fill="#6B7A90">"6월 데이터 줘"</text>
+    <text x="530" y="35" text-anchor="middle" font-size="12.5" font-weight="700" fill="#C0392B">인덱스 없음 · 처음부터 끝까지 전부 훑기</text>
+    <path d="M 175 100 C 240 55, 280 85, 330 62 S 430 85, 480 62 S 580 85, 630 62 S 720 80, 760 68" fill="none" stroke="#C0392B" stroke-width="2.5" marker-end="url(#arr)"/>
+    <g>
+      <rect x="300" y="50" width="26" height="34" rx="4" fill="#F8E7E4"/><rect x="360" y="50" width="26" height="34" rx="4" fill="#F8E7E4"/>
+      <rect x="420" y="50" width="26" height="34" rx="4" fill="#F8E7E4"/><rect x="480" y="50" width="26" height="34" rx="4" fill="#F8E7E4"/>
+      <rect x="540" y="50" width="26" height="34" rx="4" fill="#F8E7E4"/><rect x="600" y="50" width="26" height="34" rx="4" fill="#F8E7E4"/>
+      <rect x="660" y="50" width="26" height="34" rx="4" fill="#F8E7E4"/>
+    </g>
+    <text x="480" y="105" text-anchor="middle" font-size="10.5" fill="#C0392B">5만 행 · · ·</text>
+    <text x="450" y="215" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E8449">인덱스 있음 · 찾아보기로 바로 그 자리에</text>
+    <line x1="175" y1="135" x2="390" y2="172" stroke="#1E8449" stroke-width="2.5" marker-end="url(#arg)"/>
+    <rect x="395" y="155" width="180" height="36" rx="18" fill="#E9F5EF" stroke="#1E8449"/>
+    <text x="485" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#1E8449">찾아보기 (인덱스)</text>
+    <line x1="580" y1="172" x2="755" y2="135" stroke="#1E8449" stroke-width="2.5" marker-end="url(#arg)"/>
+    <rect x="760" y="90" width="140" height="60" rx="12" fill="#1E8449"/>
+    <text x="830" y="115" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">결과</text>
+    <text x="830" y="135" text-anchor="middle" font-size="11" fill="#DFF3E7">6월분 2건</text>
+  </svg></div>
+    <div class="prompt"><b>요청 문장</b>데이터가 수만 건이라 조회가 느려. 자주 찾는 well_id와 measure_date 기준으로 빨라지게 해줘. (Claude가 인덱스를 만듭니다)</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">DB BASICS · 6/7</div>
+  <h1>요청할 때 쓰는 말 · 미니 사전</h1>
+  <div class="body">
+    <div class="card">
+      <table>
+        <tr><th>용어</th><th>뜻</th><th>요청 예</th></tr>
+        <tr><td><b>테이블</b></td><td>같은 단위의 행을 모은 표</td><td>"water_quality 테이블 만들어줘"</td></tr>
+        <tr><td><b>행 · 컬럼</b></td><td>데이터 한 건 · 항목</td><td>"판정이 오염 의심인 행만 보여줘"</td></tr>
+        <tr><td><b>스키마</b></td><td>테이블 구조의 정의</td><td>"스키마를 PRD와 대조해줘"</td></tr>
+        <tr><td><b>쿼리</b></td><td>DB에 묻는 말</td><td>"6월 데이터만 조회해줘"</td></tr>
+        <tr><td><b>조인</b></td><td>두 테이블을 연결 키로 잇기</td><td>"두 테이블을 well_id로 조인해줘"</td></tr>
+        <tr><td><b>인덱스</b></td><td>자주 찾는 컬럼의 찾아보기</td><td>"measure_date에 인덱스 만들어줘"</td></tr>
+        <tr><td><b>백업</b></td><td>데이터를 파일로 내보내기</td><td>"전체를 CSV로 백업하는 버튼 만들어줘"</td></tr>
+      </table>
+    </div>
+    <div class="diff"><b>한 장 요약</b> · 한 행의 단위는 사람이 정한다 · 혼자면 로컬(SQLite), 같이면 서버(Supabase), 원본이 엑셀이면 저장 없이도 된다 · 나누면 조인으로 잇고, 느려지면 인덱스를 단다 · 문법은 Claude가 쓰고, 여러분은 용어로 요청한다.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">DB BASICS · 7/7</div>
+  <h1>엑셀에서 테이블로 · 컬럼 매핑이 다리다</h1>
+  <div class="body">
+    <div class="card" style="padding:12px 20px"><svg viewBox="0 0 920 660" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="ma" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#0E7C86"/></marker>
+  <marker id="mr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker>
+  <marker id="mn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1A3A6B"/></marker>
+</defs>
+<!-- 좌: 엑셀 -->
+<rect x="50" y="96" width="250" height="470" rx="14" fill="#F6F9FC" stroke="#DFE5EC"/>
+<text x="175" y="76" text-anchor="middle" font-size="14" font-weight="800" fill="#17233A">엑셀 파일</text>
+<text x="175" y="122" text-anchor="middle" font-size="11.5" fill="#6B7A90">water_quality_sample.xlsx</text>
+<!-- 우: DB -->
+<rect x="620" y="30" width="260" height="602" rx="14" fill="#fff" stroke="#1A3A6B" stroke-width="2"/>
+<text x="750" y="56" text-anchor="middle" font-size="13.5" font-weight="800" fill="#1A3A6B">DB(프로젝트) · water-db</text>
+<text x="750" y="76" text-anchor="middle" font-size="12" fill="#6B7A90">테이블 · water_quality</text>
+<!-- DB 자동 생성 2행 -->
+<rect x="640" y="90" width="220" height="30" rx="8" fill="#FFF6E9" stroke="#B7791F"/><text x="656" y="110" font-size="12" font-weight="700" fill="#8A5A1B">id · int8</text><rect x="796" y="96" width="52" height="18" rx="9" fill="#B7791F"/><text x="822" y="109" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">PK 자동</text>
+<rect x="640" y="126" width="220" height="30" rx="8" fill="#F1F5FA"/><text x="656" y="146" font-size="12" fill="#8A94A6">created_at · timestamptz</text><text x="844" y="146" text-anchor="end" font-size="10" fill="#8A94A6">자동</text>
+<!-- 매핑 7쌍 -->
+<g font-size="12.5">
+  <rect x="70" y="150" width="210" height="30" rx="8" fill="#fff" stroke="#B9C2CE"/><text x="86" y="170" font-weight="700" fill="#17233A">well_id</text>
+  <rect x="640" y="162" width="220" height="30" rx="8" fill="#E8F4F5" stroke="#0E7C86"/><text x="656" y="182" fill="#17233A">well_id · text</text>
+  <line x1="284" y1="165" x2="632" y2="177" stroke="#0E7C86" stroke-width="2" marker-end="url(#ma)"/>
+
+  <rect x="70" y="196" width="210" height="30" rx="8" fill="#fff" stroke="#B9C2CE"/><text x="86" y="216" font-weight="700" fill="#17233A">measure_date</text>
+  <rect x="640" y="198" width="220" height="30" rx="8" fill="#E8F4F5" stroke="#0E7C86"/><text x="656" y="218" fill="#17233A">measure_date · date</text>
+  <line x1="284" y1="211" x2="632" y2="213" stroke="#0E7C86" stroke-width="2" marker-end="url(#ma)"/>
+
+  <rect x="70" y="242" width="210" height="30" rx="8" fill="#fff" stroke="#B9C2CE"/><text x="86" y="262" font-weight="700" fill="#17233A">EC_uScm</text>
+  <rect x="640" y="234" width="220" height="30" rx="8" fill="#E8F4F5" stroke="#0E7C86"/><text x="656" y="254" fill="#17233A">ec_uscm · numeric</text>
+  <line x1="284" y1="257" x2="632" y2="249" stroke="#0E7C86" stroke-width="2" marker-end="url(#ma)"/>
+
+  <rect x="70" y="288" width="210" height="30" rx="8" fill="#fff" stroke="#B9C2CE"/><text x="86" y="308" font-weight="700" fill="#17233A">DO_mgL</text>
+  <rect x="640" y="270" width="220" height="30" rx="8" fill="#E8F4F5" stroke="#0E7C86"/><text x="656" y="290" fill="#17233A">do_mgl · numeric</text>
+  <line x1="284" y1="303" x2="632" y2="285" stroke="#0E7C86" stroke-width="2" marker-end="url(#ma)"/>
+
+  <rect x="70" y="334" width="210" height="30" rx="8" fill="#fff" stroke="#B9C2CE"/><text x="86" y="354" font-weight="700" fill="#17233A">ORP_mV</text>
+  <rect x="640" y="306" width="220" height="30" rx="8" fill="#E8F4F5" stroke="#0E7C86"/><text x="656" y="326" fill="#17233A">orp_mv · numeric</text>
+  <line x1="284" y1="349" x2="632" y2="321" stroke="#0E7C86" stroke-width="2" marker-end="url(#ma)"/>
+
+  <rect x="70" y="380" width="210" height="30" rx="8" fill="#fff" stroke="#B9C2CE"/><text x="86" y="400" font-weight="700" fill="#17233A">pH</text>
+  <rect x="640" y="342" width="220" height="30" rx="8" fill="#E8F4F5" stroke="#0E7C86"/><text x="656" y="362" fill="#17233A">ph · numeric</text>
+  <line x1="284" y1="395" x2="632" y2="357" stroke="#0E7C86" stroke-width="2" marker-end="url(#ma)"/>
+
+  <rect x="70" y="426" width="210" height="30" rx="8" fill="#fff" stroke="#B9C2CE"/><text x="86" y="446" font-weight="700" fill="#17233A">TPH_ugL</text>
+  <rect x="640" y="378" width="220" height="30" rx="8" fill="#E8F4F5" stroke="#0E7C86"/><text x="656" y="398" fill="#17233A">tph_ugl · numeric</text>
+  <line x1="284" y1="441" x2="632" y2="393" stroke="#0E7C86" stroke-width="2" marker-end="url(#ma)"/>
+
+  <!-- GWL_m 제외 -->
+  <rect x="70" y="472" width="210" height="30" rx="8" fill="#FDF3F1" stroke="#C0392B"/><text x="86" y="492" font-weight="700" fill="#C0392B">GWL_m</text>
+  <line x1="284" y1="487" x2="420" y2="487" stroke="#C0392B" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#mr)"/>
+  <circle cx="446" cy="487" r="16" fill="#fff" stroke="#C0392B" stroke-width="2"/>
+  <line x1="437" y1="478" x2="455" y2="496" stroke="#C0392B" stroke-width="2.5"/>
+  <line x1="455" y1="478" x2="437" y2="496" stroke="#C0392B" stroke-width="2.5"/>
+  <text x="446" y="522" text-anchor="middle" font-size="11" fill="#C0392B">테이블에 없음 → 보내지 않는다</text>
+
+  <!-- 앱이 만드는 값 -->
+  <rect x="70" y="540" width="210" height="72" rx="10" fill="#17233A"/>
+  <text x="175" y="566" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">앱이 만들어 넣는 값</text>
+  <text x="175" y="586" text-anchor="middle" font-size="10.5" fill="#B9CBE4">판정 규칙 · AI 요약</text>
+  <rect x="640" y="414" width="220" height="30" rx="8" fill="#EAF7F8" stroke="#0E7C86" stroke-dasharray="4 3"/><text x="656" y="434" fill="#17233A">judgment · text</text>
+  <rect x="640" y="450" width="220" height="30" rx="8" fill="#EAF7F8" stroke="#0E7C86" stroke-dasharray="4 3"/><text x="656" y="470" fill="#17233A">ai_summary · text</text>
+  <line x1="284" y1="560" x2="632" y2="431" stroke="#1A3A6B" stroke-width="2" marker-end="url(#mn)"/>
+  <line x1="284" y1="586" x2="632" y2="467" stroke="#1A3A6B" stroke-width="2" marker-end="url(#mn)"/>
+</g>
+<!-- 범례 -->
+<text x="455" y="120" text-anchor="middle" font-size="12.5" font-weight="800" fill="#0E7C86">이름을 소문자로 맞춰 보낸다 →</text>
+<text x="455" y="646" text-anchor="middle" font-size="11.5" fill="#6B7A90">"Could not find the column" 에러 = 이 다리가 어긋났다는 뜻 · 엑셀 표기와 테이블 표기를 대조하면 끝</text>
+</svg></div>
+  </div>
+</section>
+
+<div class="pg" id="pg">1 / 7</div>
+<div class="nav">
+  <button onclick="go(-1)">‹</button>
+  <button onclick="go(1)">›</button>
+</div>
+<div class="hint">← → 방향키 · 클릭으로 넘기기</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function show(n){
+  cur = Math.max(0, Math.min(slides.length-1, n));
+  slides.forEach((s,i)=>s.classList.toggle('on', i===cur));
+  document.getElementById('pg').textContent = (cur+1) + ' / ' + slides.length;
+}
+function go(d){ show(cur+d); }
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown') go(1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp') go(-1);
+});
+document.addEventListener('click', e=>{
+  if(e.target.closest('.nav')) return;
+  go(e.clientX > window.innerWidth/2 ? 1 : -1);
+});
+</script>
+</body>
+</html>
